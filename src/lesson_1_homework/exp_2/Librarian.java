@@ -11,6 +11,7 @@ public class Librarian {
     public Librarian(String name, int workExperience) {
         this.name = name;
         this.workExperience = workExperience;
+        booksLibrary = new Book[0];
     }
 
     public String getName() {
@@ -50,7 +51,7 @@ public class Librarian {
 
     private void addBook(Book book) {
         Book[] newBooksLibrary = new Book[booksLibrary.length + 1];
-        System.arraycopy(booksLibrary, 0, newBooksLibrary, 0, booksLibrary.length - 1);
+        System.arraycopy(booksLibrary, 0, newBooksLibrary, 0, booksLibrary.length);
         newBooksLibrary[booksLibrary.length] = book;
         setBooksLibrary(newBooksLibrary);
     }
@@ -64,6 +65,10 @@ public class Librarian {
                 setBooksLibrary(newBooksLibrary);
             }
         }
+    }
+
+    public void addBookToLibrarian(Book book) {
+        addBook(book);
     }
 
     @Override

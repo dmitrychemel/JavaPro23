@@ -8,6 +8,7 @@ public class Library {
     public Library(String name, String address) {
         this.name = name;
         this.address = address;
+        listLibrarians = new Librarian[0];
     }
 
     public Librarian[] getListLibrarians() {

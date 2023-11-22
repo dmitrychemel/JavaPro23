@@ -9,6 +9,7 @@ public class Reader {
     public Reader(String name, int age) {
         this.name = name;
         this.age = age;
+        bookList = new Book[0];
     }
 
     public Book[] getBookList() {
