@@ -1,4 +1,4 @@
-package lesson_1.exp_2;
+package lesson_20_11_2023.exp_2;
 
 public class Counter {
     public static void main(String[] args) {

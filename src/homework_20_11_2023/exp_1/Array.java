@@ -1,4 +1,4 @@
-package lesson_1_homework.exp_1;
+package homework_20_11_2023.exp_1;
 
 import java.util.Arrays;
 

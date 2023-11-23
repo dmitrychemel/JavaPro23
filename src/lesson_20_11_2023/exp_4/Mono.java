@@ -1,4 +1,4 @@
-package lesson_1.exp_4;
+package lesson_20_11_2023.exp_4;
 
 public class Mono {
     public static void main(String[] args) {

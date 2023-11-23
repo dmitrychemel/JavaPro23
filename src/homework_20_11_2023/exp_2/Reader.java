@@ -1,4 +1,4 @@
-package lesson_1_homework.exp_2;
+package homework_20_11_2023.exp_2;
 
 public class Reader {
 
@@ -16,7 +16,7 @@ public class Reader {
         return bookList;
     }
 
-    public void setBookList(Book[] bookList) {
+    private void setBookList(Book[] bookList) {
         this.bookList = bookList;
     }
 
@@ -40,7 +40,7 @@ public class Reader {
 
     private void addBook(Book book){
         Book[] newBooksLibrary = new Book[bookList.length + 1];
-        System.arraycopy(bookList, 0, newBooksLibrary, 0, bookList.length - 1);
+        System.arraycopy(bookList, 0, newBooksLibrary, 0, bookList.length);
         newBooksLibrary[bookList.length] = book;
         setBookList(newBooksLibrary);
     }

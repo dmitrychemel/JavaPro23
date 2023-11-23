@@ -1,4 +1,4 @@
-package lesson_1_homework.exp_2;
+package homework_20_11_2023.exp_2;
 
 public class Book {
     private String name;
@@ -39,4 +39,12 @@ public class Book {
         System.out.println("Книга не старше 50 лет");
     }
 
+    @Override
+    public String toString() {
+        return "Book{" +
+                "name='" + name + '\'' +
+                ", author='" + author + '\'' +
+                ", publication=" + publication +
+                '}';
+    }
 }

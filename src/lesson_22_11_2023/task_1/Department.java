@@ -1,6 +1,4 @@
-package lesson_2.task_1;
-
-import lesson_1_homework.exp_2.Book;
+package lesson_22_11_2023.task_1;
 
 public class Department implements DepartmentOperations {
     private String departmentName;

@@ -1,4 +1,4 @@
-package lesson_2.task_1;
+package lesson_22_11_2023.task_1;
 
 public abstract class Employee implements EmployeeActions{
     private String name;

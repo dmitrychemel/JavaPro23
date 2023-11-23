@@ -1,4 +1,4 @@
-package lesson_1.exp_1;
+package lesson_20_11_2023.exp_1;
 
 public class Main {
     public static void main(String[] args) {

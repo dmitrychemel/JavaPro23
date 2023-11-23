@@ -1,4 +1,4 @@
-package lesson_1.exp_3;
+package lesson_20_11_2023.exp_3;
 
 public class Power {
     public static void main(String[] args) {
