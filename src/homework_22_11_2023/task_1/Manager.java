@@ -1,4 +1,4 @@
-package lesson_22_11_2023.task_1;
+package homework_22_11_2023.task_1;
 
 public class Manager extends Employee implements EmployeeActions{
     private int teamSize;
