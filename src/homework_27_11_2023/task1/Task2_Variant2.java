@@ -25,14 +25,14 @@ public class Task2_Variant2 {
 
         Arrays.sort(array);
         int[] arrayUnique = arrayUnique(array,arrayCountUnique(array));
-        for (int i = 0; i < arrayUnique.length; i++) {
+        for (int e : arrayUnique) {
             int count = 0;
-            for (int j = 0; j < array.length; j++) {
-                if(arrayUnique[i] == array[j]) {
+            for (int num : array) {
+                if (e == num) {
                     count++;
                 }
             }
-            System.out.println("Число " + arrayUnique[i] + " встречается: " + count);
+            System.out.println("Число " + e + " встречается: " + count);
         }
     }
 
@@ -66,14 +66,14 @@ public class Task2_Variant2 {
 
         Collections.sort(list);
         List<Integer> listUnique = listUnique(list);
-        for (int i = 0; i < listUnique.size(); i++) {
+        for (Integer integer : listUnique) {
             int count = 0;
-            for (int j = 0; j < list.size(); j++) {
-                if(listUnique.get(i) == list.get(j)) {
+            for (Integer value : list) {
+                if (integer.equals(value)) {
                     count++;
                 }
             }
-            System.out.println("Число " + listUnique.get(i) + " встречается: " + count);
+            System.out.println("Число " + integer + " встречается: " + count);
         }
     }
 
