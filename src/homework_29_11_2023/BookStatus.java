@@ -1,4 +1,4 @@
-package lesson_29_11_2023;
+package homework_29_11_2023;
 
 public enum BookStatus {
     AVAILABLE,

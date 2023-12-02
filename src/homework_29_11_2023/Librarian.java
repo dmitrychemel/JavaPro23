@@ -1,12 +1,11 @@
-package lesson_29_11_2023;
+package homework_29_11_2023;
 
 import java.util.List;
 
-public class User implements Searchable{
-
+public class Librarian implements Searchable {
     private String name;
-    private String id;
-    private List<LibraryItem> borrowedItems;
+    private String employeeId;
+    private List<LibraryItem> managedItems;
 
     @Override
     public List<LibraryItem> findByTitle(String title) {

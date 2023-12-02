@@ -1,4 +1,4 @@
-package lesson_27_11_2023.task1;
+package homework_27_11_2023.task1;
 
 import java.util.ArrayList;
 import java.util.Arrays;
