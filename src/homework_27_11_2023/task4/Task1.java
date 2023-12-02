@@ -30,7 +30,7 @@ public class Task1 {
     public static double median(List<Integer> list) {
         Collections.sort(list);
         if (list.size() % 2 != 0) {
-            return list.get(list.size() / 2 + 1);
+            return list.get(list.size() / 2 );
         } else {
             return (double) (list.get(list.size() / 2) + list.get(list.size() / 2 + 1)) / 2;
         }
