@@ -8,6 +8,10 @@ public class User implements Searchable{
     private String id;
     private List<LibraryItem> borrowedItems;
 
+    public List<LibraryItem> getBorrowedItems() {
+        return borrowedItems;
+    }
+
     @Override
     public List<LibraryItem> findByTitle(String title) {
         return null;

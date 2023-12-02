@@ -1,5 +1,7 @@
 package homework_27_11_2023.task2;
 
+import homework_29_11_2023.LibraryItem;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,18 +13,14 @@ public class Task5 {
     }
 
     public static List<String> listUnique(List<String> list) {
-        int start = 0;
+        List<String> listUnique = new ArrayList<>();
 
-        while(start < list.size()) {
-            for (int i = start + 1; i < list.size(); i++) {
-                if (list.get(start).equals(list.get(i))) {
-                    list.remove(i);
-                    i--;
-                }
+        for (String word: list) {
+            if(!listUnique.contains(word)) {
+                listUnique.add(word);
             }
-            start ++;
         }
 
-        return list;
+        return listUnique;
     }
 }

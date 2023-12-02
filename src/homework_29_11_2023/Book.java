@@ -2,7 +2,7 @@ package homework_29_11_2023;
 
 import java.time.LocalDate;
 
-public class Book extends LibraryItem implements Borrowable, Maintainable {
+public class Book extends LibraryItem implements Borrowable, Maintainable, Comparable<Book> {
 
     private BookStatus status;
     private LocalDate publishDate;
@@ -13,6 +13,22 @@ public class Book extends LibraryItem implements Borrowable, Maintainable {
         this.status = status;
         this.publishDate = publishDate;
         this.pageCount = pageCount;
+    }
+
+    public void setStatus(BookStatus status) {
+        this.status = status;
+    }
+
+    public BookStatus getStatus() {
+        return status;
+    }
+
+    public LocalDate getPublishDate() {
+        return publishDate;
+    }
+
+    public int getPageCount() {
+        return pageCount;
     }
 
     @Override
@@ -47,10 +63,18 @@ public class Book extends LibraryItem implements Borrowable, Maintainable {
 
     @Override
     public String toString() {
-        return "Book{" +
-                "status=" + status +
-                ", publishDate=" + publishDate +
-                ", pageCount=" + pageCount +
-                '}';
+        return "Book | " +
+                " title - " + getTitle() +
+                ", author - " + getAuthor() +
+                ", genre - " + getGenre() +
+                ", status - " + status +
+                ", publishDate - " + publishDate +
+                ", pageCount  - " + pageCount;
     }
+
+    @Override
+    public int compareTo(Book o2) {
+        return this.publishDate.compareTo(o2.publishDate);
+    }
+
 }
