@@ -33,16 +33,22 @@ public class Book extends LibraryItem implements Borrowable, Maintainable, Compa
 
     @Override
     public void borrowItem(User user) {
-
+        user.getBorrowedItems().add(this);
+        this.status = BookStatus.BORROWED;
     }
 
     @Override
     public void returnItem(User user) {
-
+        user.getBorrowedItems().remove(this);
+        this.status = BookStatus.AVAILABLE;
     }
 
     @Override
     public boolean isAvailable() {
+        if(this.status.equals(BookStatus.AVAILABLE)) {
+            return  true;
+        }
+
         return false;
     }
 

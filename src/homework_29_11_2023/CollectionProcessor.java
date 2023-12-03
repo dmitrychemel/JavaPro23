@@ -49,6 +49,7 @@ public class CollectionProcessor {
     }
 
     static void printInfo(LibraryItem item) {
+
         System.out.println(item);
     }
 
@@ -68,10 +69,8 @@ public class CollectionProcessor {
     }
 
     static void sortByTitle(List<LibraryItem> items) {
-        Collections.sort(items, Comparator.comparing(LibraryItem::getTitle));
-        for (LibraryItem item : items) {
-            printInfo(item);
-        }
+        items.sort(Comparator.comparing(LibraryItem::getTitle));
+        printAllItems(items);
     }
 
     static void filterByAuthor(List<LibraryItem> items, String author) {
@@ -87,8 +86,7 @@ public class CollectionProcessor {
         int count = 0;
         for (LibraryItem item : items) {
             if (item instanceof Book) {
-                Book temp = (Book) item;
-                if (temp.getStatus().equals(status)) {
+                if (((Book) item).getStatus().equals(status)) {
                     count++;
                 }
             }
@@ -161,11 +159,11 @@ public class CollectionProcessor {
             }
         }
 
-        for (int i = 0; i < author.size(); i++) {
-            System.out.print("Автор: " + author.get(i) + " Книги: ");
-            for (int j = 0; j < items.size(); j++) {
-                if (author.get(i).equals(items.get(j).getAuthor())) {
-                    System.out.print(items.get(j).getTitle() + " ");
+        for (String s : author) {
+            System.out.print("Автор: " + s + " Книги: ");
+            for (LibraryItem item : items) {
+                if (s.equals(item.getAuthor())) {
+                    System.out.print(item.getTitle() + " ");
                 }
             }
             System.out.println();

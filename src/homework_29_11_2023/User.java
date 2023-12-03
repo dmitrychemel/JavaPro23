@@ -8,6 +8,26 @@ public class User implements Searchable{
     private String id;
     private List<LibraryItem> borrowedItems;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setBorrowedItems(List<LibraryItem> borrowedItems) {
+        this.borrowedItems = borrowedItems;
+    }
+
     public List<LibraryItem> getBorrowedItems() {
         return borrowedItems;
     }
