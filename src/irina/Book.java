@@ -2,18 +2,10 @@ package irina;
 
 public class Book {
     private String name;
-    private int publication;
+    private int page;
 
-    public Book(String name, int publication) {
+    public Book(String name, int page) {
         this.name = name;
-        this.publication = publication;
-    }
-
-    @Override
-    public String toString() {
-        return "Book{" +
-                "name='" + name + '\'' +
-                ", publication=" + publication +
-                '}';
+        this.page = page;
     }
 }
