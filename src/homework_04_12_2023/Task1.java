@@ -1,5 +1,6 @@
 package homework_04_12_2023;
 
+import java.security.Key;
 import java.util.*;
 
 public class Task1 {
@@ -59,6 +60,8 @@ public class Task1 {
         System.out.println("New Map<Integer, Integer> - " + convertListToInteger(newMap));
         valueIsSimple(integerMap);
         keyEqualsValue(map3, map4);
+
+
     }
 
     //HashMap<String, String>: Определите, можно ли преобразовать HashMap в List<String>, где каждый элемент - это конкатенация ключа и значения, так, чтобы все элементы списка были уникальными.
