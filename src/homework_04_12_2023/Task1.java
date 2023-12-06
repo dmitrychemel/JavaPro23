@@ -14,9 +14,9 @@ public class Task1 {
         map3.put("key 3", 5);
 
         Map<Integer, List<String>> map4 = new HashMap<>();
-        map4.put(12, new ArrayList<>(Arrays.asList("value 1, value 2")));
-        map4.put(3, new ArrayList<>(Arrays.asList("value 3, value 4")));
-        map4.put(5, new ArrayList<>(Arrays.asList("value 5, value 6")));
+        map4.put(12, new ArrayList<>(Arrays.asList("key 1", "value 2")));
+        map4.put(3, new ArrayList<>(Arrays.asList("value 3", "value 4")));
+        map4.put(5, new ArrayList<>(Arrays.asList("value 5", "value 6")));
 
         Map<String, String> stringMap2 = new HashMap<>();
         stringMap2.put("asdf", "qwerfsaf");
@@ -51,14 +51,14 @@ public class Task1 {
         newMap.put(1, new ArrayList<>(Arrays.asList("Ulo", "Uno", "Gym")));
         newMap.put(7, new ArrayList<>(Arrays.asList("Tut", "Home", "Eee")));
 
-        System.out.println("char A sum Value - " + countByFirstChar(map, 'A'));
-        System.out.println("Repeat Key and Value - " + repeatKeyValue(stringMap));
-        searchByFirstChar(newMap);
-        searchTheBiggestValue(integerMap);
-        checkReverse(stringMap2);
-        System.out.println("New Map<String, String> - " + convertIntegerToString(map3));
-        System.out.println("New Map<Integer, Integer> - " + convertListToInteger(newMap));
-        valueIsSimple(integerMap);
+//        System.out.println("char A sum Value - " + countByFirstChar(map, 'A'));
+//        System.out.println("Repeat Key and Value - " + repeatKeyValue(stringMap));
+//        searchByFirstChar(newMap);
+//        searchTheBiggestValue(integerMap);
+//        checkReverse(stringMap2);
+//        System.out.println("New Map<String, String> - " + convertIntegerToString(map3));
+//        System.out.println("New Map<Integer, Integer> - " + convertListToInteger(newMap));
+//        valueIsSimple(integerMap);
         keyEqualsValue(map3, map4);
 
 
@@ -68,9 +68,8 @@ public class Task1 {
 
     static void keyEqualsValue(Map<String, Integer> map, Map<Integer, List<String>> map2) {
         for (String entry : map.keySet()) {
-            int keyInteger = map.get(entry);
-            if (map2.containsKey(keyInteger)) {
-                System.out.println("KEY: " + entry + " VALUE: " + map.get(entry) + ", " + map2.get(keyInteger));
+            if (map2.containsKey(map.get(entry)) && map2.get(map.get(entry)).contains(entry)) {
+                System.out.println("KEY: " + entry + " VALUE: " + map.get(entry) + ", " + map2.get(map.get(entry)));
             }
         }
     }
