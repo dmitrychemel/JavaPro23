@@ -1,2 +1,5 @@
-package marat.oop;public class Calculater {
+package marat.oop;
+
+public class Calculater {
+
 }
