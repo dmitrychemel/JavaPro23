@@ -51,14 +51,14 @@ public class Task1 {
         newMap.put(1, new ArrayList<>(Arrays.asList("Ulo", "Uno", "Gym")));
         newMap.put(7, new ArrayList<>(Arrays.asList("Tut", "Home", "Eee")));
 
-//        System.out.println("char A sum Value - " + countByFirstChar(map, 'A'));
-//        System.out.println("Repeat Key and Value - " + repeatKeyValue(stringMap));
-//        searchByFirstChar(newMap);
-//        searchTheBiggestValue(integerMap);
-//        checkReverse(stringMap2);
-//        System.out.println("New Map<String, String> - " + convertIntegerToString(map3));
-//        System.out.println("New Map<Integer, Integer> - " + convertListToInteger(newMap));
-//        valueIsSimple(integerMap);
+        System.out.println("char A sum Value - " + countByFirstChar(map, 'A'));
+        System.out.println("Repeat Key and Value - " + repeatKeyValue(stringMap));
+        searchByFirstChar(newMap);
+        searchTheBiggestValue(integerMap);
+        checkReverse(stringMap2);
+        System.out.println("New Map<String, String> - " + convertIntegerToString(map3));
+        System.out.println("New Map<Integer, Integer> - " + convertListToInteger(newMap));
+        valueIsSimple(integerMap);
         keyEqualsValue(map3, map4);
 
 

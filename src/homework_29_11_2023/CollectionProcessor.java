@@ -120,8 +120,8 @@ public class CollectionProcessor {
     }
 
     static LibraryItem findOldestItem(List<LibraryItem> items) {
-        LocalDate current = LocalDate.now();
-        LibraryItem oldestItem = null;
+        LocalDate current = LocalDate.now(); // 1998
+        LibraryItem oldestItem = null; // mag 2
         for (LibraryItem item : items) {
             if (item instanceof Book) {
                 Book temp = (Book) item;
@@ -131,7 +131,7 @@ public class CollectionProcessor {
                 }
             } else {
                 Magazine temp = (Magazine) item;
-                if (temp.getReleaseDate().isBefore(current)) {
+                if (temp.getReleaseDate().isBefore(current)) { // 1998  // mag2
                     current = temp.getReleaseDate();
                     oldestItem = temp;
                 }
