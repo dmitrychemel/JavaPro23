@@ -10,7 +10,7 @@ public class Task2 {
         Map<Integer,Integer> count = new HashMap<>();
 
         for(Integer e: arary) {
-            count.put(e, count.getOrDefault(e, 0) +1);
+            count.put(e, count.getOrDefault(e, 0) + 1);
         }
         for(Map.Entry<Integer, Integer> e : count.entrySet()) {
             System.out.println("Значение " + e.getKey() + " - повтор: " + e.getValue());

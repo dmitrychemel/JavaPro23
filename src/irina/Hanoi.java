@@ -2,7 +2,7 @@ package irina;
 
 public class Hanoi {
     public static void main(String[] args) {
-        int nDisks = 3;
+        int nDisks = 4;
         doTowers(nDisks, 'A', 'B', 'C');
     }
     public static void doTowers(int topN, char from, char inter, char to) {
