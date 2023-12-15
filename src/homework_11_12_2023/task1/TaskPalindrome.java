@@ -8,7 +8,7 @@ import java.util.ListIterator;
 public class TaskPalindrome {
 
     public static void main(String[] args) {
-        String word = "texxet";
+        String word = "привет"; // тевирп
         System.out.println(isPalindrome(word));
     }
 
@@ -17,6 +17,20 @@ public class TaskPalindrome {
         for (Character chars : word.toCharArray()) {
             characterList.add(chars);
         }
+
+//        ListIterator<Character> forward = characterList.listIterator();
+//        ListIterator<Character> backward = characterList.listIterator(characterList.size());
+//
+//        while (forward.hasNext() && backward.hasPrevious()) {
+//            char first = forward.next();
+//            char end = backward.previous();
+//
+//            if (first != end) {
+//                return false;
+//            }
+//        }
+//
+//        return true;
 
         ListIterator<Character> iterator = characterList.listIterator(characterList.size());
 
