@@ -12,11 +12,29 @@ public class Team<P extends Participant> {
     private Faker FAKER = new Faker();
     private String name;
     private double score;
+    private int currentStreakWins;
+    private int maxStreakWins;
     private List<P> participants = new ArrayList<>(100);
 
     public Team(String name) {
         this.name = name;
         score = 0;
+    }
+
+    public int getCurrentStreakWins() {
+        return currentStreakWins;
+    }
+
+    public void setCurrentStreakWins(int currentStreakWins) {
+        this.currentStreakWins = currentStreakWins;
+    }
+
+    public int getMaxStreakWins() {
+        return maxStreakWins;
+    }
+
+    public void setMaxStreakWins(int maxStreakWins) {
+        this.maxStreakWins = maxStreakWins;
     }
 
     public double getScore() {
@@ -71,13 +89,35 @@ public class Team<P extends Participant> {
         if (i == 1) {
             this.score += 1;
             Handler.addHistoryMatch(this, teamPlayWith, 1);
+            helperStreakWins(teamPlayWith, 1);
         } else if (i == 2) {
             this.score += 0.5;
             teamPlayWith.score += 0.5;
             Handler.addHistoryMatch(this, teamPlayWith, 0.5);
+            helperStreakWins(teamPlayWith, 0.5);
         } else {
             teamPlayWith.score += 1;
             Handler.addHistoryMatch(this, teamPlayWith, 0);
+            helperStreakWins(teamPlayWith, 0);
+        }
+    }
+
+    private void helperStreakWins(Team<P> teamPlayWith, double result) {
+        if (result == 1) {
+            this.currentStreakWins++;
+            if(this.currentStreakWins > maxStreakWins) {
+                maxStreakWins = currentStreakWins;
+            }
+            teamPlayWith.setCurrentStreakWins(0);
+        } else if (result == 0) {
+            this.currentStreakWins = 0;
+            teamPlayWith.setCurrentStreakWins(getCurrentStreakWins() + 1);
+            if(teamPlayWith.getCurrentStreakWins() > teamPlayWith.getMaxStreakWins()) {
+                teamPlayWith.setMaxStreakWins(teamPlayWith.getCurrentStreakWins());
+            }
+        } else {
+            this.currentStreakWins = 0;
+            teamPlayWith.setCurrentStreakWins(0);
         }
     }
 

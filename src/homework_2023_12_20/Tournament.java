@@ -16,10 +16,8 @@ public class Tournament {
         }
     }
 
-    public static void makeTournament(Set<Team<? extends Participant>> allTeams) {
-        makeGroups(Handler.getTeams(), Pupil.class);
-        makeGroups(Handler.getTeams(), Teenager.class);
-        makeGroups(Handler.getTeams(), Adult.class);
+    public static <T extends Participant> void makeTournament(Set<Team<? extends Participant>> allTeams, Class<T> type) {
+        makeGroups(Handler.getTeams(), type);
 
         for (Team<? extends Participant> team : allTeams) {
             Handler.addTeamResult(team);
@@ -33,31 +31,16 @@ public class Tournament {
         }
     }
 
-    public static void resultTournamentByGroups() {
-        List<Team<Pupil>> groupPupil = resultGroup(Pupil.class);
-        List<Team<Teenager>> groupTeenager = resultGroup(Teenager.class);
-        List<Team<Adult>> groupAdult = resultGroup(Adult.class);
+    public static <T extends Participant> void resultTournamentByGroups(Class<T> type) {
+        List<Team<T>> group = resultGroup(type);
 
-        groupPupil.sort(Comparator.comparing(Team::getScore, Comparator.reverseOrder()));
-        groupTeenager.sort(Comparator.comparing(Team::getScore, Comparator.reverseOrder()));
-        groupAdult.sort(Comparator.comparing(Team::getScore, Comparator.reverseOrder()));
+        group.sort(Comparator.comparing(Team::getScore, Comparator.reverseOrder()));
 
-        System.out.println("Результаты группы " + Pupil.class.getSimpleName() + ":");
-        for (Team<Pupil> team : groupPupil) {
+        System.out.println("Результаты группы " + group.get(0).getParticipants().get(0).getClass().getSimpleName() + ":");
+        for (Team<T> team : group) {
             System.out.println("Название команды - " + team.getName() + " | Очки команды: " + team.getScore());
         }
-
         System.out.println();
-        System.out.println("Результаты группы " + Teenager.class.getSimpleName() + ":");
-        for (Team<Teenager> team : groupTeenager) {
-            System.out.println("Название команды - " + team.getName() + " | Очки команды: " + team.getScore());
-        }
-
-        System.out.println();
-        System.out.println("Результаты группы " + Adult.class.getSimpleName() + ":");
-        for (Team<Adult> team : groupAdult) {
-            System.out.println("Название команды - " + team.getName() + " | Очки команды: " + team.getScore());
-        }
     }
 
     private static <T extends Participant> List<Team<T>> resultGroup(Class<T> type) {
@@ -90,10 +73,19 @@ public class Tournament {
 
         List<Team<T>> leaders = new ArrayList<>();
 
-
-        if (group.get(0).getScore() == group.get(1).getScore() || group.get(1).getScore() == group.get(2).getScore()) {
-            for (int i = 0; i < 5; i++) {
-                leaders.add(group.get(i));
+        if (group.size() == 2) {
+            if (group.get(0).getScore() == group.get(1).getScore()) {
+                leaders.addAll(group);
+            }
+        } else if (group.size() < 5) {
+            if (group.get(0).getScore() == group.get(1).getScore() || group.get(1).getScore() == group.get(2).getScore()) {
+                leaders.addAll(group);
+            }
+        } else {
+            if (group.get(0).getScore() == group.get(1).getScore() || group.get(1).getScore() == group.get(2).getScore()) {
+                for (int i = 0; i < 5; i++) {
+                    leaders.add(group.get(i));
+                }
             }
         }
 
@@ -111,13 +103,12 @@ public class Tournament {
     private static <T extends Participant> boolean helperChecked(List<Team<T>> leaders) {
         leaders.sort(Comparator.comparing(Team::getScore, Comparator.reverseOrder()));
         if (leaders.size() == 2) {
-            if (leaders.get(0).getScore() == leaders.get(1).getScore()) {
-                return true;
-            }
-        }
-        for (int i = 0; i < 2; i++) {
-            if (leaders.get(i).getScore() == leaders.get(i + 1).getScore()) {
-                return true;
+            return leaders.get(0).getScore() == leaders.get(1).getScore();
+        } else {
+            for (int i = 0; i < 2; i++) {
+                if (leaders.get(i).getScore() == leaders.get(i + 1).getScore()) {
+                    return true;
+                }
             }
         }
         return false;
@@ -215,22 +206,13 @@ public class Tournament {
     }
 
     public static <T extends Participant> void findingWinnersOverTeam(Team<T> team) {
-        for (Map.Entry<Map<Team<? extends Participant>, Team<? extends Participant>>, List<Double>> match : Handler.getHistoryMatches().entrySet()) {
-            for (Map.Entry<Team<? extends Participant>, Team<? extends Participant>> players : match.getKey().entrySet()) {
-                if (players.getKey().equals(team) || match.getValue().contains(0D)) {
-                    for (Double score : match.getValue()) {
-                        if (score == 0) {
-                            System.out.println("Данная команда: " + players.getValue().getName() + " | Выграла - " + players.getKey().getName());
-                        }
-                    }
-                }
-                if (players.getValue().equals(team) || match.getValue().contains(1D)) {
-                    for (Double score : match.getValue()) {
-                        if (score == 1) {
-                            System.out.println("Данная команда: " + players.getValue().getName() + " | Выграла - " + players.getKey().getName());
-                        }
-                    }
-                }
+        for (Map.Entry<List<Team<? extends Participant>>, List<Double>> match : Handler.getHistoryMatches().entrySet()) {
+            if (match.getKey().get(0).equals(team) && match.getValue().contains(0D)) {
+
+                System.out.println("Данная команда: " + match.getKey().get(1).getName() + " | Выграла - " + match.getKey().get(0).getName());
+            }
+            if (match.getKey().get(1).equals(team) && match.getValue().contains(1D)) {
+                        System.out.println("Данная команда: " + match.getKey().get(0).getName() + " | Выграла - " + match.getKey().get(1).getName());
             }
         }
     }
@@ -298,8 +280,10 @@ public class Tournament {
         }
 
         sortByAge.sort(Comparator.comparing(Participant::getAge, Comparator.reverseOrder()));
+        int count = 1;
         for (Participant participant : sortByAge) {
-            System.out.println("Имя: " + participant.getName() + " | Возраст - " + participant.getAge());
+            System.out.println(count + ".Имя: " + participant.getName() + " | Возраст - " + participant.getAge());
+            count++;
         }
     }
 
@@ -330,46 +314,179 @@ public class Tournament {
     }
 
     public static void findingAllTeamsWithTotalAge() {
-        List<Team<? extends Participant>> teamList = new ArrayList<>(Handler.getTeams());
-        Iterator<Team<? extends Participant>> iterator = teamList.iterator();
+        Set<Team<? extends Participant>> clone = new HashSet<>(Handler.getTeams());
 
-        while (iterator.hasNext()) {
-            Set<Team<? extends Participant>> teamsWithTotalAge = new HashSet<>();
-            Team<? extends Participant> team = iterator
-            teamsWithTotalAge.add(team);
-            int totalAge = totalAgeTeam(team);
-        }
-        for (Team<? extends Participant> team : teamList) {
+        for (Team<? extends Participant> team : Handler.getTeams()) {
             Set<Team<? extends Participant>> teamsWithTotalAge = new HashSet<>();
             teamsWithTotalAge.add(team);
             int totalAge = totalAgeTeam(team);
 
-            for (Team<? extends Participant> teamNext : teamList) {
-                if(team.equals(teamNext)) {
+            for (Team<? extends Participant> teamNext : clone) {
+                if (team.equals(teamNext)) {
                     continue;
                 }
                 if (totalAgeTeam(teamNext) == totalAge) {
                     teamsWithTotalAge.add(teamNext);
                 }
             }
+            clone.removeAll(teamsWithTotalAge);
             if (teamsWithTotalAge.size() > 1) {
-                teamList.removeAll(teamsWithTotalAge);
-            } else {
                 System.out.println("Суммарный возраст - " + totalAge);
-                for (Team<? extends Participant> teamSet : teamList) {
+                for (Team<? extends Participant> teamSet : teamsWithTotalAge) {
                     System.out.println("Название команды: " + teamSet.getName() + " | Суммарный возраст - " + totalAge);
                 }
                 System.out.println();
-                teamList.removeAll(teamsWithTotalAge);
+
             }
         }
     }
 
     private static int totalAgeTeam(Team<? extends Participant> team) {
         int totalAge = 0;
-        for(Participant participant : team.getParticipants()) {
+        for (Participant participant : team.getParticipants()) {
             totalAge += participant.getAge();
         }
         return totalAge;
+    }
+
+    public static <T extends Participant> void averageScoreGroup(Class<T> type) {
+        int countTeams = 0;
+        double scoreGroup = 0;
+
+        for (Team<? extends Participant> team : Handler.getTeams()) {
+            if (team.getParticipants().get(0).getClass().isAssignableFrom(type)) {
+                countTeams++;
+                scoreGroup += team.getScore();
+            }
+        }
+
+        System.out.println();
+    }
+
+    public static void teamScoreBeBetter() {
+        for (Team<? extends Participant> team : Handler.getTeams()) {
+            if (checkTeamBetter(team)) {
+                System.out.println("У команды всегда улучшались результаты - " + team.getName());
+            }
+        }
+    }
+
+    private static boolean checkTeamBetter(Team<? extends Participant> team) {
+
+        for (Map.Entry<List<Team<? extends Participant>>, List<Double>> matches : Handler.getHistoryMatches().entrySet()) {
+            if (matches.getKey().get(0).equals(team) && matches.getValue().contains(0D)) {
+                return false;
+            }
+            if (matches.getKey().get(1).equals(team) && matches.getValue().contains(1D)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static <T extends Participant> void findingTeamsWithDraw(Team<T> team) {
+        System.out.println(team.getName() + " Сыграла в ничью с:");
+        for (Map.Entry<List<Team<? extends Participant>>, List<Double>> matches : Handler.getHistoryMatches().entrySet()) {
+            if (matches.getKey().get(0).equals(team) && matches.getValue().contains(0.5)) {
+                System.out.println("Название команды: " + matches.getKey().get(1).getName());
+            }
+            if (matches.getKey().get(1).equals(team) && matches.getValue().contains(0.5)) {
+                System.out.println("Название команды: " + matches.getKey().get(0).getName());
+            }
+        }
+    }
+
+    public static <T extends Participant> void resultMatchesBetweenTeams(Team<T> first, Team<T> second) {
+        for (Map.Entry<List<Team<? extends Participant>>, List<Double>> matches : Handler.getHistoryMatches().entrySet()) {
+            if(matches.getKey().contains(first) && matches.getKey().contains(second)) {
+                for (Double score : matches.getValue()) {
+                    if (score == 1) {
+                        System.out.println(matches.getKey().get(0).getName() + " - " + matches.getKey().get(1).getName() + " | Счет 1 : 0");
+                    } else if (score == 0) {
+                        System.out.println(matches.getKey().get(0).getName() + " - " + matches.getKey().get(1).getName() + " | Счет 0 : 1");
+                    } else {
+                        System.out.println(matches.getKey().get(0).getName() + " - " + matches.getKey().get(1).getName() + " | Счет 0 : 0");
+                    }
+                }
+            }
+        }
+    }
+
+    public static void infoAboutTeams(Team<? extends Participant> first, Team<? extends Participant> second) {
+        int countMatchesFirst = countMatches(first);
+        int countMatchesSecond = countMatches(second);
+
+        double averageAgeFirst = averageAgeTeam(first);
+        double averageAgeSecond = averageAgeTeam(second);
+
+        System.out.println("Название первой команды: " + first.getName() + " | Средний балл команды - "
+                + first.getScore() / countMatchesFirst + " | Средний возраст команды - " + averageAgeFirst);
+        System.out.println();
+        System.out.println("Название второй команды: " + second.getName() + " | Средний балл команды - "
+                + second.getScore() / countMatchesSecond + " | Средний возраст команды - " + averageAgeSecond);
+    }
+
+    private static double averageAgeTeam(Team<? extends Participant> team) {
+        double allAge = 0;
+        for (Participant participant : team.getParticipants()) {
+            allAge += participant.getAge();
+        }
+
+        return allAge / team.getParticipants().size();
+    }
+
+    public static int countMatches(Team<? extends Participant> team) {
+        int count = 0;
+        for (Map.Entry<List<Team<? extends Participant>>, List<Double>> matches : Handler.getHistoryMatches().entrySet()) {
+            if(matches.getKey().contains(team)) {
+                count += matches.getValue().size();
+            }
+        }
+
+        return count;
+    }
+
+    public static void teamsStreakWins() {
+        Team<? extends Participant> team = null;
+
+        for(Team<? extends Participant> team1 : Handler.getTeams()) {
+            if (team == null) {
+                team = team1;
+            }
+            if(team.getMaxStreakWins() < team1.getMaxStreakWins()) {
+                team = team1;
+            }
+        }
+
+        System.out.println("Название команды: " + team.getName() + " | Серия побед - " + team.getMaxStreakWins()) ;
+    }
+
+    public static void teamsStreakDraws() {
+        Team<? extends Participant> team = null;
+        int allDraws = 0;
+
+        for (Team<? extends Participant> team1 : Handler.getTeams()) {
+            if(team == null) {
+                team = team1;
+            }
+            int count = 0;
+            for (Map.Entry<List<Team<? extends Participant>>, List<Double>> matches : Handler.getHistoryMatches().entrySet()) {
+                if(matches.getKey().contains(team1) && matches.getValue().contains(0.5)) {
+                    for(Double score : matches.getValue()) {
+                        if (score == 0.5) {
+                            count++;
+                        }
+                    }
+                }
+            }
+
+            if(allDraws < count) {
+                team = team1;
+                allDraws = count;
+            }
+        }
+
+        System.out.println("Название команды: " + team.getName() + " | Количество ничьей - " + allDraws);
     }
 }

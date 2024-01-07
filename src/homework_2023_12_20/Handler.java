@@ -5,9 +5,9 @@ import java.util.*;
 public class Handler {
     private static Set<Team<? extends Participant>> teams = new HashSet<>();
     private static Map<Team<? extends Participant>, Double> tableAllGroups = new LinkedHashMap<>();
-    private static Map<Map<Team<? extends Participant>, Team<? extends Participant>>, List<Double>> historyMatches = new LinkedHashMap<>();
+    private static Map<List<Team<? extends Participant>>, List<Double>> historyMatches = new LinkedHashMap<>();
 
-    public static Map<Map<Team<? extends Participant>, Team<? extends Participant>>, List<Double>> getHistoryMatches() {
+    public static Map<List<Team<? extends Participant>>, List<Double>> getHistoryMatches() {
         return historyMatches;
     }
 
@@ -32,10 +32,11 @@ public class Handler {
     }
 
     public static <T extends Participant> void addHistoryMatch(Team<T> first, Team<T> second, double score) {
-        Map<Team<? extends Participant>, Team<? extends Participant>> innerMap = new LinkedHashMap<>();
-        innerMap.put(first, second);
+        List<Team<? extends Participant>> innerList = new ArrayList<>();
+        innerList.add(first);
+        innerList.add(second);
 
-        historyMatches.computeIfAbsent(innerMap, k -> new ArrayList<>()).add(score);
+        historyMatches.computeIfAbsent(innerList, k -> new ArrayList<>()).add(score);
     }
 
 }
