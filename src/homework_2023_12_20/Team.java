@@ -70,14 +70,15 @@ public class Team<P extends Participant> {
 
         if (i == 1) {
             this.score += 1;
+            Handler.addHistoryMatch(this, teamPlayWith, 1);
         } else if (i == 2) {
             this.score += 0.5;
             teamPlayWith.score += 0.5;
+            Handler.addHistoryMatch(this, teamPlayWith, 0.5);
         } else {
             teamPlayWith.score += 1;
+            Handler.addHistoryMatch(this, teamPlayWith, 0);
         }
-
-
     }
 
     public<T extends Participant> void generateTeam(int countParticipant, Class<T> type) {
