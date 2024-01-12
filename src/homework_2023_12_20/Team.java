@@ -138,5 +138,11 @@ public class Team<P extends Participant> {
                 this.addNewParticipant((P) new Adult(FAKER.name().name(), FAKER.number().numberBetween(19, 29)));
             }
         }
+
+        if (Child.class.isAssignableFrom(type)) {
+            for (int i = 0; i < countParticipant; i++) {
+                this.addNewParticipant((P) new Child(FAKER.name().name(), FAKER.number().numberBetween(0, 7)));
+            }
+        }
     }
 }

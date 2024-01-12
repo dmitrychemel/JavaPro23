@@ -8,11 +8,12 @@ public class Test {
     public static void main(String[] args) {
         // Generate teams - Pupil, Teenager, Adult
         Tournament.teamsGenerate(25, 4, Pupil.class);
-//        Tournament.teamsGenerate(2, 4, Teenager.class);
-//        Tournament.teamsGenerate(2, 4, Adult.class);
+        Tournament.teamsGenerate(25, 4, Teenager.class);
+        Tournament.teamsGenerate(25, 4, Adult.class);
+        Tournament.teamsGenerate(25, 4, Child.class);
 
-        Tournament.makeTournament(Handler.getTeams(), Pupil.class);
-//        Tournament.resultTournamentByGroups(Pupil.class);
+        Tournament.makeTournament(Handler.getTeams(), Child.class);
+        Tournament.resultTournamentByGroups(Child.class);
 //        Tournament.resultTournament();
 //        Tournament.highScoringTeam();
 //        Tournament.allScores();
