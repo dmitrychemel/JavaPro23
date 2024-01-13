@@ -25,19 +25,19 @@ public class TaskIntegers {
         return input.stream().reduce(0,Integer::sum);
     }
 
-//    private static List<Integer> getSquares(List<Integer> input) {
-//        return
-//    }
-//
-//    private static List<Integer> filterGreaterThan(List<Integer> input, int minValue) {
-//
-//    }
-//
-//    private static boolean containsNumber(List<Integer> input, int number) {
-//
-//    }
-//
-//    private static Optional<Integer> findMax(List<Integer> input) {
-//
-//    }
+    private static List<Integer> getSquares(List<Integer> input) {
+        return input.stream().map(e -> e * e).toList();
+    }
+
+    private static List<Integer> filterGreaterThan(List<Integer> input, int minValue) {
+        return input.stream().filter(e -> e > minValue).toList();
+    }
+
+    private static boolean containsNumber(List<Integer> input, int number) {
+        return input.stream().anyMatch(e -> e == number);
+    }
+
+    private static Optional<Integer> findMax(List<Integer> input) {
+        return input.stream().reduce(Integer::max);
+    }
 }
