@@ -2,41 +2,56 @@ package homework_2024_01_24;
 
 import java.io.*;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class TaskTwo {
-    /**
-     * Десериализуйте список книг из файла,
-     * созданного в предыдущем задании, используя ObjectInputStream.
-     * Используйте Stream API для фильтрации книг, например, по автору или году издания.
-     * Результаты сохраните в новый сериализованный файл
-     */
     public static void main(String[] args) {
         List<Book> books = deserializeBooksFromFile("serializedBooks.ser");
-        List<Book> filteredBooks = filterListByYear(books, 1900);
+        List<Book> filteredBooks = filteredBookByYear(books, 1900);
+
         serializeBooksToFile(filteredBooks, "filteredBooks.ser");
+        serializeBooksToFile(filteredBookByPrice(books, 380), "filteredBooksByPrice.ser");
     }
 
-    private static List<Book> deserializeBooksFromFile(String file) {
-        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file))) {
-            return (List<Book>) objectInputStream.readObject();
+    public static List<Book> deserializeBooksFromFile(String fileName) {
+        try (ObjectInputStream objectIn = new ObjectInputStream(new FileInputStream(fileName))) {
+            return (List<Book>) objectIn.readObject();
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static List<Book> filterListByYear(List<Book> books, int year) {
+    public static List<Book> filteredBookByYear(List<Book> books, int threshold) {
         return books.stream()
-                .filter(e -> e.getYear() > year)
+                .filter(book -> book.getYear() > threshold)
                 .toList();
     }
 
-    private static void serializeBooksToFile(List<Book> books, String fileName) {
-        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(fileName))) {
-            objectOutputStream.writeObject(books);
-
+    public static void serializeBooksToFile(List<Book> books, String nameFile) {
+        try(ObjectOutputStream objectOut = new ObjectOutputStream(new FileOutputStream(nameFile))) {
+            objectOut.writeObject(books);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    
+    public static List<Book> filteredBookByPrice(List<Book> books, double threshold) {
+        return  books.stream()
+                .filter(book -> book.getPrice() > threshold)
+                .toList();
+    }
 
+    public static Map<String, Double> groupingByAuthor(List<Book> books) {
+        return books.stream()
+                .collect(Collectors.groupingBy(Book::getAuthor, Collectors.averagingDouble(Book::getPrice)));
+    }
+
+    public static void serializeStatisticsToFile(Map<String, Double> statistics, String fileName) {
+        try(ObjectOutputStream objectOut = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            objectOut.writeObject(statistics);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
