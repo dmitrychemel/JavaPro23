@@ -20,13 +20,14 @@ public class PaymentService {
         return result;
     }
 
-    public void refundPayment(double amount) {
+    public boolean refundPayment(double amount) {
         boolean result = transactionRepository.processTransaction(-amount);
         if (result) {
             notificationService.sendPaymentNotification("Refund successful for amount: " + amount);
         } else {
             notificationService.sendPaymentNotification("Refund failed for amount: " + amount);
         }
+        return result;
     }
 
     public void adjustPayment(double originalAmount, double newAmount) {
